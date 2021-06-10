@@ -190,17 +190,17 @@ def print_traffic_statistics(device_ip, token, sessionID, connection_status):
 
 def print_connection_status(device_ip, token, sessionID):
     d = call_api(device_ip, token, sessionID, '/api/monitoring/status')
-    connection_status = d['response']['ConnectionStatus']
-    signal_strength = d['response']['SignalStrength']
-    signal_level = d['response']['SignalIcon']
-    network_type = d['response']['CurrentNetworkType']
-    roaming_status = d['response']['RoamingStatus']
-    wan_ip = d['response']['WanIPAddress']
-    primary_dns_ip = d['response']['PrimaryDns']
-    secondary_dns_ip = d['response']['SecondaryDns']
-    wifi_status = d['response']['WifiStatus']
-    wifi_users_current = d['response']['CurrentWifiUser']
-    wifi_users_max = d['response']['TotalWifiUser']
+    connection_status = d.get('response').get('ConnectionStatus')
+    signal_strength = d.get('response').get('SignalStrength')
+    signal_level = d.get('response').get('SignalIcon')
+    network_type = d.get('response').get('CurrentNetworkType')
+    roaming_status = d.get('response').get('RoamingStatus')
+    wan_ip = d.get('response').get('WanIPAddress')
+    primary_dns_ip = d.get('response').get('PrimaryDns')
+    secondary_dns_ip = d.get('response').get('SecondaryDns')
+    wifi_status = d.get('response').get('WifiStatus')
+    wifi_users_current = d.get('response').get('CurrentWifiUser')
+    wifi_users_max = d.get('response').get('TotalWifiUser')
 
     print('  Connection status: ' + get_connection_status(connection_status))
     public_ip = None
