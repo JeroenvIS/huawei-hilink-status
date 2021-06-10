@@ -175,11 +175,11 @@ def get_signal_level(level):
 
 def print_traffic_statistics(device_ip, token, sessionID, connection_status):
     d = call_api(device_ip, token, sessionID, '/api/monitoring/traffic-statistics')
-    current_connect_time = d['response']['CurrentConnectTime']
-    current_upload = d['response']['CurrentUpload']
-    current_download = d['response']['CurrentDownload']
-    total_upload = d['response']['TotalUpload']
-    total_download = d['response']['TotalDownload']
+    current_connect_time = d.get('response').get('CurrentConnectTime')
+    current_upload = d.get('response').get('CurrentUpload')
+    current_download = d.get('response').get('CurrentDownload')
+    total_upload = d.get('response').get('TotalUpload')
+    total_download = d.get('response').get('TotalDownload')
 
     if connection_status == '901':
         print('    Connected for: ' + time.strftime('%H:%M:%S', time.gmtime(float(current_connect_time))) + ' (hh:mm:ss)')
@@ -228,15 +228,15 @@ def print_connection_status(device_ip, token, sessionID):
 
 def print_device_info(device_ip, token, sessionID):
     d = call_api(device_ip, token, sessionID, '/api/device/information')
-    device_name = d['response']['DeviceName']
-    serial_number = d['response']['SerialNumber']
-    imei = d['response']['Imei']
-    hardware_version = d['response']['HardwareVersion']
-    software_version = d['response']['SoftwareVersion']
-    webui_version = d['response']['WebUIVersion']
-    mac_address1 = d['response']['MacAddress1']
-    mac_address2 = d['response']['MacAddress2']
-    product_family = d['response']['ProductFamily']
+    device_name = d.get('response').get('DeviceName')
+    serial_number = d.get('response').get('SerialNumber')
+    imei = d.get('response').get('Imei')
+    hardware_version = d.get('response').get('HardwareVersion')
+    software_version = d.get('response').get('SoftwareVersion')
+    webui_version = d.get('response').get('WebUIVersion')
+    mac_address1 = d.get('response').get('MacAddress1')
+    mac_address2 = d.get('response').get('MacAddress2')
+    product_family = d.get('response').get('ProductFamily')
 
     print('Huawei ' + device_name + ' ' + product_family + ' Modem (IMEI: ' + imei + ')')
     print('  Hardware version: ' + hardware_version)
@@ -252,13 +252,13 @@ def print_device_info(device_ip, token, sessionID):
 def print_provider(device_ip, token, sessionID, connection_status):
     if connection_status == '901':
         d = call_api(device_ip, token, sessionID, '/api/net/current-plmn')
-        state = d['response']['State']
-        provider_name = d['response']['FullName']
+        state = d.get('response').get('State')
+        provider_name = d.get('response').get('FullName')
         print('    Network operator: ' + provider_name)
 
 def print_unread(device_ip, token, sessionID):
     d = call_api(device_ip, token, sessionID, '/api/monitoring/check-notifications')
-    unread_messages = d['response']['UnreadMessage']
+    unread_messages = d.get('response').get('UnreadMessage')
     if unread_messages is not None and int(unread_messages) > 0:
         print('  Unread SMS: ' + unread_messages)
 
